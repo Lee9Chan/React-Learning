@@ -1,19 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Todo from './Todo';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reducer from './reducer';
+import thunk from 'redux-thunk';
 
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+    }) : compose;
 
-
-
-
-ReactDOM.render(
-  <React.StrictMode>
-    <Todo />
-  </React.StrictMode>,
-  document.getElementById('root')
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk),
 );
+const store = createStore(reducer, enhancer);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-
+export default store;
